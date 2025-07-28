@@ -1,4 +1,3 @@
-# DSA
 # DSA Practice Problems 🚀
 
 This repository contains solutions to various Data Structures and Algorithms problems from:
