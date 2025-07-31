@@ -40,9 +40,9 @@ public:
 
         vector<vector<pair<int, int>>> dp(rows, vector<pair<int, int>>(cols, {-1, -1}));
 
-        for (int i = 0; i < rows; ++i)
-            for (int j = 0; j < cols; ++j)
-                solve(matrix, i, j, dp);
+        // for (int i = 0; i < rows; ++i)
+        //     for (int j = 0; j < cols; ++j)
+        pair<int,int> waste = solve(matrix, 0, 0, dp);
 
         return maxi;
     }
