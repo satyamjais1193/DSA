@@ -1,0 +1,1 @@
+<h2>minimum-difference-in-sums-after-removal-of-elements Notes</h2><hr>[ Time taken: 3 hrs 16 m 8 s ]
