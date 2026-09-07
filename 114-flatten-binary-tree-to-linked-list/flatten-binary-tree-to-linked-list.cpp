@@ -1,48 +1,33 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
-    vector<int> inorder;
-    void inorder_tr(TreeNode* root){
-        if(!root) return ;
+    void preorder(TreeNode* root, vector<TreeNode*>& nodes) {
+        if (root == nullptr)
+            return;
 
-        inorder.push_back(root->val);
-        cout<<root->val<<" ";
-        inorder_tr(root->left);
-        inorder_tr(root->right);
+        nodes.push_back(root);
 
+        preorder(root->left, nodes);
+        preorder(root->right, nodes);
     }
-    void create(TreeNode * root, int& index){
-        if(index >= inorder.size()){
-            return ;
+
+    void flatten(TreeNode* root) {
+
+        if (root == nullptr)
+            return;
+
+        vector<TreeNode*> nodes;
+
+        // Store nodes in preorder
+        preorder(root, nodes);
+
+        // Connect them like a linked list
+        for (int i = 0; i < nodes.size() - 1; i++) {
+            nodes[i]->left = nullptr;
+            nodes[i]->right = nodes[i + 1];
         }
 
-        TreeNode * newNode = new TreeNode(inorder[index]);
-        index++;
-
-        root->left = nullptr;
-        root->right = newNode;
-        create(newNode , index);
-
-        // return root;
-
-    }
-    void flatten(TreeNode* root) {
-        inorder_tr(root);
-        int index =1;
-
-        create( root,index);
-        // root = head;
-
-
+        // Last node
+        nodes.back()->left = nullptr;
+        nodes.back()->right = nullptr;
     }
 };
