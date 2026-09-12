@@ -1,43 +1,46 @@
 class Solution {
 public:
-    bool canShift(vector<int>& weights, int allowedw, int days){
-        int wsum = 0;
-        int count = 1;
-
-        for(int w : weights){
-            if(wsum + w <= allowedw){
-                wsum += w;
+    bool canship(vector<int>& w, int& days, long long maxw){
+        int reqday = 0;
+        int i = 0; 
+        while( i < w.size()){
+            long long  sum = 0;
+            while(i < w.size() && sum + w[i] <= maxw){
+                sum += w[i];
+                i++;
             }
-            else{
-                count ++;
-                wsum = w;
-            }
+            reqday ++;
         }
-        cout<<allowedw <<" "<<count <<endl;
-
-        return (count <= days);
+        return reqday <= days;
     }
     int shipWithinDays(vector<int>& weights, int days) {
-        int sum=0, ans =-1,  maxi = -1 ;
+        // sort
+
+        long long sum = 0;
         for(int w : weights){
-            maxi = max(maxi, w);
-            sum += w;
+            sum +=w;
         }
 
-        int s = maxi;
-        int e = sum;
+        //this is common error---- when you not start with s = max_element.
+        long long s= *max_element(weights.begin(), weights.end());
+        
+        long long  e = sum ;
+        long long ans = 0;
 
-        while(s <= e) {
-            int mid = s + (e-s)/2;
+        while(s<=e){
+            long long mid = s + ( e-s)/2;
 
-            if( canShift ( weights, mid, days)){
+            if(canship(weights, days, mid)){
                 ans = mid;
-                e = mid-1;
+                // s = mid +1;
+                e = mid -1;
             }
             else{
-                s = mid +1;
+                // e = mid -1;
+                s  = mid +1;
             }
         }
         return ans;
+
     }
 };
