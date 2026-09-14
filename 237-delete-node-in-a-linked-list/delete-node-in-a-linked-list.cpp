@@ -9,17 +9,14 @@
 class Solution {
 public:
     void deleteNode(ListNode* node) {
-        ListNode*  curr = node;
-        ListNode*  temp = curr->next;
+        //copy next node data
+        node->val = node->next->val;
 
-        while(temp->next != nullptr){
-            curr->val = temp->val;
-            curr = temp;
-            temp = temp->next;
-        }
-        curr->val = temp->val;
-        curr ->next = nullptr;
-        
-        
+        //skip next node;
+        ListNode* todel = node->next;
+        node->next = todel->next;
+
+        //This method cannot delete the last node.-- as mention in question
+
     }
 };
