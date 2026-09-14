@@ -11,33 +11,23 @@
 class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {
-        vector<bool> present(203, false);
+        //dummy node val shoud be out of range 
+        ListNode* dummy = new ListNode(-101 , head);
 
-        ListNode* curr = head;
-        ListNode* prev = NULL;
+        ListNode* temp = dummy;
 
-        while(curr){
-            ListNode * nextNode = curr->next;
-            if(present[curr->val + 100]){
-                prev->next = nextNode;
-                curr->next = NULL;
-                // delete curr;
-
-                // prev->next = nextNode;
-                curr = nextNode;
-                
+        while( temp && temp->next){
+            if( temp->next->val == temp->val){
+                temp ->next = temp->next->next;
+                // temp->next ->next = nullptr;
                 
             }
             else{
-                present[curr->val + 100] = true;
-                            prev = curr;
-            curr = nextNode;
-                
+                temp = temp ->next;
             }
-            // prev = curr;
-            // curr = nextNode;
-
+            
+            
         }
-        return head;
+        return dummy->next;
     }
 };
