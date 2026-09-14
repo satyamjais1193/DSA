@@ -10,40 +10,54 @@
  */
 class Solution {
 public:
+    //to revrese list
+    ListNode* solve(ListNode* prev, ListNode* curr) {
+
+        //retruing prev as head...as when curr rech to nullptr after travelling all LL.. and at that prev will be denoting newhead of reversed linked list ... thus return prev
+        if(!curr) return prev;
+
+        //ek base mai kerunga
+        ListNode* nextnode = curr->next;
+        curr->next = prev;
+
+        //baki recurion dekh lega
+        return solve( curr, nextnode);
+    }
+
+
+
     bool isPalindrome(ListNode* head) {
-        ListNode* temp = head;
-        int n =0; 
-        while(temp){
-            temp = temp ->next;
-            n++;
-        }
+        ListNode* fast = head;
+        ListNode* slow = head;
 
-        int k = (n)/2;
-
-        ListNode* prev= nullptr;
-        ListNode* curr = head;
-
-        for(int i=0; i<k; i++){
-            ListNode* nextNode = curr->next;
-            curr->next= prev;
-            prev = curr;
-            curr= nextNode;            
-        }
-
-        ListNode* head1 = prev;
-        ListNode* head2 = curr;
-
-        if (n % 2 == 1)
-            head2 = head2->next;
-
-        while(head2){
-            if(head1->val != head2->val){
-                return false;
+        //travel till mid point to divide it into two list
+        while(fast->next){
+            fast = fast -> next ;
+            if(fast->next){
+                slow = slow->next;
+                fast = fast->next;
             }
-            head1 = head1->next;
-            head2 = head2->next;
         }
 
+        //make tow list
+        ListNode* head1 = head;
+        ListNode* head2 = slow->next;
+
+        //main condition 
+
+
+        //reverse list2 
+        head2 = solve(nullptr, head2);
+
+        while( head2){
+            if(head2->val != head1->val) return false;
+
+            head2 = head2->next;
+            head1= head1->next;
+        }
         return true;
+
+
+
     }
 };
