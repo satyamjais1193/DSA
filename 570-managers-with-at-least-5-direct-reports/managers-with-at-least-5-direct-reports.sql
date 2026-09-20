@@ -1,21 +1,9 @@
 # Write your MySQL query statement below
--- create VIEW  info as 
--- select *
-
--- from Employee
--- -- where count(managerId) >= 5
--- group by managerId
--- having count(managerId) >= 5
-
-select e2.name
-from Employee as e1
-join Employee as e2
-on e1.managerId = e2.id
-group by e1.managerId  
-having count(e1.managerId) >= 5;
-
-
-
-
-
-
+select name 
+from Employee
+where id in (
+    select managerId
+    from Employee
+    group by managerId
+    having count(id)>=5);
+    #usse in-- not == ... as inner query may return result more than one answer
