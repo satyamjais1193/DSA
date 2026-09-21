@@ -10,11 +10,22 @@ public:
 
             dp[i] = max(option1, option2);            
         }
-        
-
-
         return dp[0];
+    }
+    int so(vector<int>& nums){
+        vector<int>dp(nums.size()+2, 0);
+        int n = nums.size();
+        int next = 0;
+        int nextnext =0; 
+        for(int i =n-1; i>=0; i--){
+            int option1= nums[i] + nextnext;
+            int option2= next;
 
+            int curr = max(option1, option2);       
+            nextnext= next;
+            next = curr;     
+        }
+        return next;
     }
 
     int solveusingdp(vector<int>& nums, int i,vector<int>& dp){
@@ -35,6 +46,8 @@ public:
     }
 
     int rob(vector<int>& nums) {
+
+        return so(nums);
 
         return solvetabu(nums);
 
